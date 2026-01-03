@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createOrRetrieveCustomer, createServerClient, createSupabaseAdminClient } from '@/lib/supabase'
+import { createClient } from '@supabase/supabase-js'
 
 // 强制动态渲染，因为使用了外部服务
 export const dynamic = 'force-dynamic'
@@ -16,37 +17,128 @@ export async function POST(request: NextRequest) {
     }
 
     const supabase = createServerClient()
+    const adminClient = createSupabaseAdminClient()
+    const anonUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+    const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+    const anonClient = (anonUrl && anonKey) ? createClient(anonUrl, anonKey) : null
 
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: {
-          full_name: fullName,
+    let data: { user: any; session: any } = { user: null, session: null }
+
+    if (process.env.SUPABASE_SERVICE_ROLE_KEY) {
+      const { data: adminData, error: adminError } = await adminClient.auth.admin.createUser({
+        email,
+        password,
+        email_confirm: true,
+        user_metadata: { full_name: fullName }
+      })
+      if (adminError) {
+        const msg = adminError.message || ''
+        if (msg.includes('Bearer') || msg.toLowerCase().includes('api key')) {
+          if (!anonClient) {
+            return NextResponse.json(
+              { error: 'Supabase anon key not configured' },
+              { status: 500 }
+            )
+          }
+          const { data: signUpData, error: signUpError } = await anonClient.auth.signUp({
+            email,
+            password,
+            options: {
+              data: {
+                full_name: fullName,
+              },
+            },
+          })
+          if (signUpError) {
+            const signUpMsg = signUpError.message || ''
+            if (signUpMsg.toLowerCase().includes('already')) {
+              const { data: signInData, error: signInError } = await anonClient.auth.signInWithPassword({
+                email,
+                password,
+              })
+              if (!signInError) {
+                data.user = signInData.user
+                data.session = signInData.session
+              } else {
+                return NextResponse.json(
+                  { error: signUpError.message },
+                  { status: 400 }
+                )
+              }
+            } else {
+              return NextResponse.json(
+                { error: signUpError.message },
+                { status: 400 }
+              )
+            }
+          } else {
+            data = signUpData as any
+          }
+        } else {
+          return NextResponse.json(
+            { error: adminError.message },
+            { status: 400 }
+          )
+        }
+      } else {
+        data.user = adminData.user
+      }
+    } else {
+      if (!anonClient) {
+        return NextResponse.json(
+          { error: 'Supabase anon key not configured' },
+          { status: 500 }
+        )
+      }
+      const { data: signUpData, error: signUpError } = await anonClient.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            full_name: fullName,
+          },
         },
-      },
-    })
-
-    if (error) {
-      return NextResponse.json(
-        { error: error.message },
-        { status: 400 }
-      )
+      })
+      if (signUpError) {
+        const signUpMsg = signUpError.message || ''
+        if (signUpMsg.toLowerCase().includes('already')) {
+          const { data: signInData, error: signInError } = await anonClient.auth.signInWithPassword({
+            email,
+            password,
+          })
+          if (!signInError) {
+            data.user = signInData.user
+            data.session = signInData.session
+          } else {
+            return NextResponse.json(
+              { error: signUpError.message },
+              { status: 400 }
+            )
+          }
+        } else {
+          return NextResponse.json(
+            { error: signUpError.message },
+            { status: 400 }
+          )
+        }
+      } else {
+        data = signUpData as any
+      }
     }
 
-   
-
-    let customer;
-    try {
-      customer = await createOrRetrieveCustomer({
-        uuid: error ? "" : data.user?.id || "",
-        email: email,
-      }).catch((err: any) => {
-        throw err;
-      });
-    } catch (err: any) {
-      console.error(err);
-      return new Response(err.message, { status: 500 });
+    let customer
+    if (process.env.STRIPE_SECRET_KEY) {
+      try {
+        customer = await createOrRetrieveCustomer({
+          uuid: data.user?.id || '',
+          email: email,
+        }).catch((err: any) => {
+          throw err
+        })
+      } catch (err: any) {
+        console.error('Stripe customer setup failed, continue signup:', err?.message || err)
+        // 不阻断注册流程，继续后续逻辑
+      }
     }
 
     // 添加注册奖励积分
@@ -56,7 +148,6 @@ export async function POST(request: NextRequest) {
         const userId = data.user.id
         const trans_no = `SIGNUP_BONUS_${timestamp}_${userId.substring(0, 8)}`
         
-        const adminClient = createSupabaseAdminClient()
         const { error: creditError } = await adminClient
           .from('credits')
           .insert({
@@ -120,9 +211,7 @@ export async function POST(request: NextRequest) {
     return response
 
   } catch (error) {
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    )
+    const message = error instanceof Error ? error.message : 'Internal server error'
+    return NextResponse.json({ error: message }, { status: 500 })
   }
 }

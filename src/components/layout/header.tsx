@@ -12,6 +12,111 @@ import LanguageSwitcher from '@/components/language-switcher'
 import { useAuth } from '@/contexts/AuthContext'
 import { User as UserType } from '@/lib/auth'
 
+
+import { CircleCheckIcon, CircleHelpIcon, CircleIcon } from "lucide-react"
+
+// import { useIsMobile } from "@/hooks/use-mobile"
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuIndicator,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  NavigationMenuViewport,
+} from "@/components/ui/navigation-menu"
+
+
+const components: { title: string; href: string; description: string }[] = [
+  {
+    title: "Alert Dialog",
+    href: "/docs/primitives/alert-dialog",
+    description:
+      "A modal dialog that interrupts the user with important content and expects a response.",
+  },
+  {
+    title: "Hover Card",
+    href: "/docs/primitives/hover-card",
+    description:
+      "For sighted users to preview content available behind a link.",
+  },
+  {
+    title: "Progress",
+    href: "/docs/primitives/progress",
+    description:
+      "Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.",
+  },
+  {
+    title: "Scroll-area",
+    href: "/docs/primitives/scroll-area",
+    description: "Visually or semantically separates content.",
+  },
+  {
+    title: "Tabs",
+    href: "/docs/primitives/tabs",
+    description:
+      "A set of layered sections of content—known as tab panels—that are displayed one at a time.",
+  },
+  {
+    title: "Tooltip",
+    href: "/docs/primitives/tooltip",
+    description:
+      "A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.",
+  },
+]
+
+export function NavigationMenuDemo() {
+  // const isMobile = useIsMobile()
+  return (
+    <NavigationMenu >
+      <NavigationMenuList className="flex-wrap">
+        
+        <NavigationMenuItem>
+          <NavigationMenuTrigger>Components</NavigationMenuTrigger>
+          <NavigationMenuContent>
+            <ul className="grid gap-2 sm:w-[400px] md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+              {components.map((component) => (
+                <ListItem
+                  key={component.title}
+                  title={component.title}
+                  href={component.href}
+                >
+                  {component.description}
+                </ListItem>
+              ))}
+            </ul>
+          </NavigationMenuContent>
+        </NavigationMenuItem>
+        
+      </NavigationMenuList>
+    </NavigationMenu>
+)
+}
+
+function ListItem({
+  title,
+  children,
+  href,
+  ...props
+}: React.ComponentPropsWithoutRef<"li"> & { href: string }) {
+  return (
+    <li {...props}>
+      <NavigationMenuLink asChild>
+        <Link href={href}>
+          <div className="text-sm leading-none font-medium">{title}</div>
+          <p className="text-muted-foreground line-clamp-2 text-sm leading-snug">
+            {children}
+          </p>
+        </Link>
+      </NavigationMenuLink>
+    </li>
+  )
+}
+
+
+
+
 interface HeaderProps {
   dict?: Dictionary
   initialUser?: UserType | null
@@ -21,6 +126,10 @@ export function Header({ dict, initialUser }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const { theme, setTheme } = useTheme()
   const pathname = usePathname()
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => {
+    setMounted(true)
+  }, [])
   
   // Extract current language from path
   const currentLang = (pathname.split('/')[1] || 'en') as Locale
@@ -57,6 +166,7 @@ export function Header({ dict, initialUser }: HeaderProps) {
     return pathname.startsWith(localizedHref) && pathname !== `/${currentLang}` && pathname !== `/${currentLang}/`
   }
 
+
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -67,6 +177,14 @@ export function Header({ dict, initialUser }: HeaderProps) {
               {siteInfo.name}
             </Link>
           </div>
+
+          {/* ok 2026-1-3  */}
+          <NavigationMenuDemo /> 
+
+          {/* <nav>
+            <NavigationMenuDemo/>
+          </nav>
+
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex space-x-8">
@@ -98,10 +216,14 @@ export function Header({ dict, initialUser }: HeaderProps) {
               onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
               aria-label={dict?.common?.common?.toggleTheme || "Toggle theme"}
             >
-              {theme === 'dark' ? (
-                <Sun className="h-5 w-5" />
+              {mounted ? (
+                theme === 'dark' ? (
+                  <Sun className="h-5 w-5" />
+                ) : (
+                  <Moon className="h-5 w-5" />
+                )
               ) : (
-                <Moon className="h-5 w-5" />
+                <span className="inline-block h-5 w-5" />
               )}
             </Button>
 

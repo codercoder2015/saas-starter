@@ -44,6 +44,9 @@
   },
   "header": {
     "navigation": [
+      { "name": "AI图像", "href": "/image" },
+      { "name": "AI视频", "href": "/video" },
+      { "name": "AI工具", "href": "/prompt" },
       { "name": "首页", "href": "/" },
       { "name": "AI", "href": "/ai" },
       { "name": "价格", "href": "/pricing" },

@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import "@/app/globals.css";
 import { ComponentPreviewClient } from "./component-preview-client";
 
 interface PreviewPageProps {

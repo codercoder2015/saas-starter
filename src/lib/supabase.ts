@@ -14,13 +14,23 @@ const PLAN_CREDITS_MAPPING: Record<string, { price: number; credits: number }> =
   'pro': { price: 300, credits: 500 }
 };
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
-  auth: {
-    persistSession: true,
-    autoRefreshToken: true,
-    detectSessionInUrl: true,
-  },
-})
+// export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+//   auth: {
+//     persistSession: true,
+//     autoRefreshToken: true,
+//     detectSessionInUrl: true,
+//   },
+// })
+
+
+//  2025-12-25
+// import { createClient } from "@supabase/supabase-js";
+
+// const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY || 'placeholder-key';
+
+export const supabase = createClient(supabaseUrl, supabaseKey);
+
 
 
 // Server-side Supabase client for API routes

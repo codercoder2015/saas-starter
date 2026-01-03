@@ -1,5 +1,6 @@
 "use client";
 
+import "@/app/globals.css";
 import { Button, PrimaryButton, GradientButton, LinkButton } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
