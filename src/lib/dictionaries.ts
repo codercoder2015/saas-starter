@@ -38,6 +38,29 @@ export interface Dictionary {
       text: string;
       href: string;
     };
+    navigationMenu?: {
+      imageMenuLabel: string;
+      imageMenu: Array<{
+        key: string;
+        title: string;
+        href: string;
+        description: string;
+      }>;
+      videoMenuLabel: string;
+      videoMenu: Array<{
+        key: string;
+        title: string;
+        href: string;
+        description: string;
+      }>;
+      promptMenuLabel: string; 
+      promptMenu: Array<{
+        key: string;
+        title: string;
+        href: string;
+        description: string;
+      }>;
+    }
   };
   footer: {
     sections: Array<{

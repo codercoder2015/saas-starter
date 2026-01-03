@@ -44,9 +44,6 @@
   },
   "header": {
     "navigation": [
-      { "name": "AI图像", "href": "/image" },
-      { "name": "AI视频", "href": "/video" },
-      { "name": "AI工具", "href": "/prompt" },
       { "name": "首页", "href": "/" },
       { "name": "AI", "href": "/ai" },
       { "name": "价格", "href": "/pricing" },
@@ -58,6 +55,23 @@
     "cta": {
       "text": "立即开始",
       "href": "/pricing"
+    },
+    "navigationMenu": {
+      "imageMenuLabel": "AI图像",
+      "imageMenu": [
+        { "key": "Nano Banana Pro", "title": "Nano Banana Pro", "href": "/image", "description": "专业级AI图像生成器，，具有突破性文本渲染" },
+        { "key": "Nano Banana", "title": "Nano Banana", "href": "/image", "description": "谷歌AI图像编辑模型" },
+        { "key": "Seedream 4.0", "title": "Seedream 4.0", "href": "/image", "description": "字节跳动最快的 4K AI图像生成酷" }
+      ],
+      "videoMenuLabel": "AI视频",
+      "videoMenu": [
+        { "key": "Sora 2", "title": "Sora 2", "href": "/video", "description": "OpenAI突破性的电影级视频创AI" },
+        { "key": "Veo 3", "title": "Veo 3", "href": "/video", "description": "Google 高级视频与音频生成 AI作AI" }
+      ],
+      "promptMenuLabel": "AI工具",
+      "promptMenu": [
+        { "key": "Prompt 生成器", "title": "Prompt 生成器", "href": "/prompt", "description": "为图像/视频模型优化提示词" }
+      ]
     }
   },
   "footer": {

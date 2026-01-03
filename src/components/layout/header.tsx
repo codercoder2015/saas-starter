@@ -66,54 +66,33 @@ const components: { title: string; href: string; description: string }[] = [
   },
 ]
 
-export function NavigationMenuDemo() {
-  // const isMobile = useIsMobile()
-  return (
-    <NavigationMenu >
-      <NavigationMenuList className="flex-wrap">
+// export function NavigationMenuDemo() {
+//   // const isMobile = useIsMobile()
+//   return (
+//     <NavigationMenu >
+//       <NavigationMenuList className="flex-wrap">
         
-        <NavigationMenuItem>
-          <NavigationMenuTrigger>Components</NavigationMenuTrigger>
-          <NavigationMenuContent>
-            <ul className="grid gap-2 sm:w-[400px] md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-              {components.map((component) => (
-                <ListItem
-                  key={component.title}
-                  title={component.title}
-                  href={component.href}
-                >
-                  {component.description}
-                </ListItem>
-              ))}
-            </ul>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
+//         <NavigationMenuItem>
+//           <NavigationMenuTrigger>Components</NavigationMenuTrigger>
+//           <NavigationMenuContent>
+//             <ul className="grid gap-2 sm:w-[400px] md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+//               {components.map((component) => (
+//                 <ListItem
+//                   key={component.title}
+//                   title={component.title}
+//                   href={component.href}
+//                 >
+//                   {component.description}
+//                 </ListItem>
+//               ))}
+//             </ul>
+//           </NavigationMenuContent>
+//         </NavigationMenuItem>
         
-      </NavigationMenuList>
-    </NavigationMenu>
-)
-}
-
-function ListItem({
-  title,
-  children,
-  href,
-  ...props
-}: React.ComponentPropsWithoutRef<"li"> & { href: string }) {
-  return (
-    <li {...props}>
-      <NavigationMenuLink asChild>
-        <Link href={href}>
-          <div className="text-sm leading-none font-medium">{title}</div>
-          <p className="text-muted-foreground line-clamp-2 text-sm leading-snug">
-            {children}
-          </p>
-        </Link>
-      </NavigationMenuLink>
-    </li>
-  )
-}
-
+//       </NavigationMenuList>
+//     </NavigationMenu>
+// )
+// }
 
 
 
@@ -144,7 +123,12 @@ export function Header({ dict, initialUser }: HeaderProps) {
   }
   const headerConfig = dict?.header || {
     navigation: [],
-    cta: { text: "Get Started", href: "/pricing" }
+    cta: { text: "Get Started", href: "/pricing" },
+    navigationMenu: {
+      imageMenu: [],
+      videoMenu: [],
+      promptMenu: []
+    }
   }
 
   // Add language prefix to navigation links
@@ -166,6 +150,107 @@ export function Header({ dict, initialUser }: HeaderProps) {
     return pathname.startsWith(localizedHref) && pathname !== `/${currentLang}` && pathname !== `/${currentLang}/`
   }
 
+  
+function ListItem({
+  title,
+  children,
+  href,
+  ...props
+}: React.ComponentPropsWithoutRef<"li"> & { href: string }) {
+  return (
+    <li {...props}>
+      <NavigationMenuLink asChild>
+        <Link href={href}>
+          <div className="text-sm leading-none font-medium">{title}</div>
+          <p className="text-muted-foreground line-clamp-2 text-sm leading-snug">
+            {children}
+          </p>
+        </Link>
+      </NavigationMenuLink>
+    </li>
+  )
+}
+// AI图像
+function NavigationMenuImage() {
+  return (
+    <NavigationMenu >
+      <NavigationMenuList className="flex-wrap">        
+        <NavigationMenuItem>
+          <NavigationMenuTrigger>{headerConfig?.navigationMenu?.imageMenuLabel?.trim() || 'AI图像'}</NavigationMenuTrigger>
+          <NavigationMenuContent>
+            <ul className="grid gap-2 sm:w-[400px] md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+              {headerConfig?.navigationMenu?.imageMenu?.map((component) => (
+                <ListItem
+                  key={component.title}
+                  title={component.title}
+                  href={component.href}
+                >
+                  {component.description}
+                </ListItem>
+              ))}
+
+            </ul>
+          </NavigationMenuContent>
+        </NavigationMenuItem>
+        
+      </NavigationMenuList>
+    </NavigationMenu>
+)
+}
+// AI视频
+function NavigationMenuVideo() {
+  return (
+    <NavigationMenu >
+      <NavigationMenuList className="flex-wrap">        
+        <NavigationMenuItem>
+          <NavigationMenuTrigger>{headerConfig?.navigationMenu?.videoMenuLabel?.trim() || 'AI视频'}</NavigationMenuTrigger>
+          <NavigationMenuContent>
+            <ul className="grid gap-2 sm:w-[400px] md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+              {headerConfig?.navigationMenu?.videoMenu?.map((component) => (
+                <ListItem
+                  key={component.title}
+                  title={component.title}
+                  href={component.href}
+                >
+                  {component.description}
+                </ListItem>
+              ))}
+
+            </ul>
+          </NavigationMenuContent>
+        </NavigationMenuItem>
+        
+      </NavigationMenuList>
+    </NavigationMenu>
+)
+}
+// AI提示词
+function NavigationMenuPrompt() {
+  return (
+    <NavigationMenu >
+      <NavigationMenuList className="flex-wrap">        
+        <NavigationMenuItem>
+          <NavigationMenuTrigger>{headerConfig?.navigationMenu?.promptMenuLabel?.trim() || 'AI工具'}</NavigationMenuTrigger>
+          <NavigationMenuContent>
+            <ul className="grid gap-2 sm:w-[400px] md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+              {headerConfig?.navigationMenu?.promptMenu?.map((component) => (
+                <ListItem
+                  key={component.title}
+                  title={component.title}
+                  href={component.href}
+                >
+                  {component.description}
+                </ListItem>
+              ))}
+
+            </ul>
+          </NavigationMenuContent>
+        </NavigationMenuItem>
+        
+      </NavigationMenuList>
+    </NavigationMenu>
+)
+}
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
@@ -179,12 +264,9 @@ export function Header({ dict, initialUser }: HeaderProps) {
           </div>
 
           {/* ok 2026-1-3  */}
-          <NavigationMenuDemo /> 
-
-          {/* <nav>
-            <NavigationMenuDemo/>
-          </nav>
-
+          <NavigationMenuImage /> 
+          <NavigationMenuVideo />
+          <NavigationMenuPrompt />
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex space-x-8">

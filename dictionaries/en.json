@@ -55,6 +55,23 @@
     "cta": {
       "text": "Get Started",
       "href": "/pricing"
+    },
+    "navigationMenu": {
+      "imageMenuLabel": "AI Images",
+      "imageMenu": [
+        { "key": "Nano Banana Pro", "title": "Nano Banana Pro", "href": "/image", "description": "Professional-level AI image generator with breakthrough text rendering" },
+        { "key": "Nano Banana", "title": "Nano Banana", "href": "/image", "description": "Google AI Image Editing Model" },
+        { "key": "Seedream 4.0", "title": "Seedream 4.0", "href": "/image", "description": "ByteDance's Fastest 4K AI Image Generation" }
+      ],
+      "videoMenuLabel": "AI Videos",
+      "videoMenu": [
+        { "key": "Sora 2", "title": "Sora 2", "href": "/video", "description": "OpenAI's breakthrough movie-level video creation AI" },
+        { "key": "Veo 3", "title": "Veo 3", "href": "/video", "description": "Google's Advanced Video and Audio Generation AI" }
+      ],
+      "promptMenuLabel": "AI Tools",
+      "promptMenu": [
+        { "key": "Prompt Generator", "title": "Prompt Generator", "href": "/prompt", "description": "Optimize prompts for image/video models" }
+      ]
     }
   },
   "footer": {
