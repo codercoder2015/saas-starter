@@ -59,7 +59,7 @@
     "navigationMenu": {
       "imageMenuLabel": "AI图像",
       "imageMenu": [
-        { "key": "Nano Banana Pro", "title": "Nano Banana Pro", "href": "/image", "description": "专业级AI图像生成器，，具有突破性文本渲染" },
+        { "key": "Nano Banana Pro", "title": "Nano Banana Pro", "href": "/image/bananapro", "description": "专业级AI图像生成器，，具有突破性文本渲染" },
         { "key": "Nano Banana", "title": "Nano Banana", "href": "/image", "description": "谷歌AI图像编辑模型" },
         { "key": "Seedream 4.0", "title": "Seedream 4.0", "href": "/image", "description": "字节跳动最快的 4K AI图像生成酷" }
       ],
