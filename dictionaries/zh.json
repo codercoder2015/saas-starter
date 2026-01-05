@@ -59,13 +59,13 @@
     "navigationMenu": {
       "imageMenuLabel": "AI图像",
       "imageMenu": [
-        { "key": "Nano Banana Pro", "title": "Nano Banana Pro", "href": "/image/bananapro", "description": "专业级AI图像生成器，，具有突破性文本渲染" },
+        { "key": "Nano Banana Pro", "title": "Nano Banana Pro", "href": "/image/bananapro", "description": "专业级AI图像生成器，，具有突破性文本渲染","newFlag": "新" },
         { "key": "Nano Banana", "title": "Nano Banana", "href": "/image", "description": "谷歌AI图像编辑模型" },
-        { "key": "Seedream 4.0", "title": "Seedream 4.0", "href": "/image", "description": "字节跳动最快的 4K AI图像生成酷" }
+        { "key": "Seedream 4.0", "title": "Seedream 4.0", "href": "/image", "description": "字节跳动最快的 4K AI图像生成酷","newFlag": "新" }
       ],
       "videoMenuLabel": "AI视频",
       "videoMenu": [
-        { "key": "Sora 2", "title": "Sora 2", "href": "/video", "description": "OpenAI突破性的电影级视频创AI" },
+        { "key": "Sora 2", "title": "Sora 2", "href": "/video", "description": "OpenAI突破性的电影级视频创AI","newFlag": "新" },
         { "key": "Veo 3", "title": "Veo 3", "href": "/video", "description": "Google 高级视频与音频生成 AI作AI" }
       ],
       "promptMenuLabel": "AI工具",

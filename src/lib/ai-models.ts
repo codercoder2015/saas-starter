@@ -76,6 +76,7 @@ export const modelOptions = [
   // Replicate Models (enabled) - older but stable versions
   { value: 'stability-ai/stable-diffusion-3.5-medium', label: 'Replicate/Stable Diffusion 3.5 Medium' },
   { value: 'stability-ai/stable-diffusion-3.5-large', label: 'Replicate/Stable Diffusion 3.5 Large' },
+  { value: 'black-forest-labs/flux-1.1-pro', label: 'Replicate/Flux 1.1 Pro' },
   
   // Google Models (enabled)
   { value: 'imagen-3.0-generate-002', label: 'Google/Imagen 3.0 Generate 002' },

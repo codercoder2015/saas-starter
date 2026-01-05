@@ -2,7 +2,6 @@
 
 import React from 'react'
 import { Header } from './header'
-import { Footer } from './footer'
 import { Dictionary } from '@/lib/dictionaries'
 import { User } from '@/lib/auth'
 
@@ -20,7 +19,6 @@ export function LayoutNobottom({ children, className = '', dict, initialUser }: 
       <main>
         {children}
       </main>
-      {/* <Footer dict={dict} /> */}
     </div>
   )
 } 

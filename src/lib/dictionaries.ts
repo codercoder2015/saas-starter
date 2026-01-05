@@ -45,6 +45,7 @@ export interface Dictionary {
         title: string;
         href: string;
         description: string;
+        newFlag?: string;
       }>;
       videoMenuLabel: string;
       videoMenu: Array<{
@@ -52,6 +53,7 @@ export interface Dictionary {
         title: string;
         href: string;
         description: string;
+        newFlag?: string;
       }>;
       promptMenuLabel: string; 
       promptMenu: Array<{
@@ -59,6 +61,7 @@ export interface Dictionary {
         title: string;
         href: string;
         description: string;
+        newFlag?: string;
       }>;
     }
   };

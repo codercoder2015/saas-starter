@@ -76,6 +76,11 @@ export const modelProviderMap = {
     envKey: 'REPLICATE_API_TOKEN',
     envName: 'Replicate',
   },
+  'black-forest-labs/flux-1.1-pro': {
+    provider: createReplicate,
+    envKey: 'REPLICATE_API_TOKEN',
+    envName: 'Replicate',
+  },
 }
 
 export type ImageSize = '256x256' | '512x512' | '768x768' | '1024x1024' | '1024x1792' | '1792x1024'
